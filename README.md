@@ -1,0 +1,1 @@
+These are a few attempts at writing common board games for two players to be played in the command line. I'll hopefully add AIs as I go, eventually using machine learning if I get around to it.

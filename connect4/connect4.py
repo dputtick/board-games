@@ -146,6 +146,7 @@ def main():
     print('Thanks for playing!')
     return
 
+
 def test():
     board = empty_board(5, 5)
     print_board(board)
@@ -154,14 +155,6 @@ def test():
     print_board(board)
     print(board)
 
+
 if __name__ == '__main__':
     main()
-
-
-# Function that returns the desired board size
-# Function that draws the board for the user
-# Function that gets a move and returns it
-# Function that adds the move to the board
-# Function that checks for victory conditions
-# Function that checks for draw conditions
-# Function that records the sequence of moves that were made
