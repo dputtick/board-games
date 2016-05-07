@@ -1,13 +1,13 @@
 import random
 
 
-def board_displayer(board):
+def display_board(board):
     '''Returns a visual representation of the current board'''
 
     empty_row = '   |   |   '
     token_row = ' {0} | {1} | {2} '
     full_row = '___|___|___'
-    print('')
+    print()
     print(empty_row)
     print(token_row.format(board[1], board[2], board[3]))
     print(full_row)
@@ -17,10 +17,10 @@ def board_displayer(board):
     print(empty_row)
     print(token_row.format(board[7], board[8], board[9]))
     print(empty_row)
-    print('')
+    print()
 
 
-def move_getter(player, board, piece):
+def get_move(player, board, piece):
     '''Returns a new move from either player, 
     or the computer if a 1 player game'''
 
@@ -47,38 +47,29 @@ def update_board(board, move, piece):
     return board
 
 
-def victory_checker(board, piece):
+def check_victory(board, piece):
     '''Checks whether the victory conditions are met for a given player'''
 
-    if ((board[1] == piece and board[2] == piece and board[3] == piece) or
-    (board[4] == piece and board[5] == piece and board[6] == piece) or
-    (board[7] == piece and board[8] == piece and board[9] == piece) or
-    (board[1] == piece and board[4] == piece and board[7] == piece) or
-    (board[2] == piece and board[5] == piece and board[8] == piece) or
-    (board[3] == piece and board[6] == piece and board[9] == piece) or
-    (board[1] == piece and board[5] == piece and board[9] == piece) or
-    (board[3] == piece and board[5] == piece and board[7] == piece)):
-        return True
-    else:
-        return False
+    return ((board[1] == board[2] == board[3] == piece) or
+    (board[4] == board[5] == board[6] == piece) or
+    (board[7] == board[8] == board[9] == piece) or
+    (board[1] == board[4] == board[7] == piece) or
+    (board[2] == board[5] == board[8] == piece) or
+    (board[3] == board[6] == board[9] == piece) or
+    (board[1] == board[5] == board[9] == piece) or
+    (board[3] == board[5] == board[7] == piece))
 
 
 def play_again():
     '''Returns input from the player whether or not to start a new game'''
 
-    if input('Play again? y/n\n').lower() == 'y':
-        return True
-    else:
-        return False
+    return input('Play again? y/n\n').lower() == 'y'
 
 
 def one_or_two_players():
     '''Returns input from the player whether to start in 1 or 2 player mode'''
 
-    if input('One or two players? 1/2\n') == '2':
-        return 2
-    else:
-        return 1
+    return 2 if input('One or two players? 1/2\n') == '2' else 1
 
 
 def main(first_mover):
@@ -89,26 +80,28 @@ def main(first_mover):
     while True:
         piece = player_dict[player]
         if player in ('Player 1', 'Player 2'):
-            board_displayer(board)
-        move = move_getter(player, board, piece)
+            display_board(board)
+        move = get_move(player, board, piece)
         update_board(board, move, piece)
-        if victory_checker(board, piece) == True:
+        if check_victory(board, piece) == True:
             break
         if [loc for loc in board if str(loc).isdigit()] == []:
-            board_displayer(board)
+            display_board(board)
             print('The game ends in a draw.\n')
             if play_again() == True:
                 player = invert_dict[player]
                 main(player)
+                return None
             else:
                 print('Thanks for playing!')
                 return None
         player = invert_dict[player]
-    board_displayer(board)
+    display_board(board)
     print('Congratulations {}, you won!\n'.format(player.lower()))
     if play_again() == True:
         player = invert_dict[player]
         main(player)
+        return None
     else:
         print('Thanks for playing!')
         return None
@@ -128,13 +121,13 @@ def computer_move(board, piece):
         if loc in open_spaces:
             test_board = list(board_tuple)
             test_board[loc] = piece
-            if victory_checker(test_board, piece) == True:
+            if check_victory(test_board, piece) == True:
                 return loc
     for loc in board_tuple:
         if loc in open_spaces:
             test_board = list(board_tuple)
             test_board[loc] = opp_piece
-            if victory_checker(test_board, opp_piece) == True:
+            if check_victory(test_board, opp_piece) == True:
                 return loc
     if len(open_spaces) == 9:
         return 1
@@ -201,5 +194,6 @@ if __name__ == '__main__':
         invert_dict = {'Player 1': 'Computer', 'Computer': 'Player 1'}
         player_dict = {'Player 1': 'X', 'Computer': 'O'}
     main('Player 1')
+    print('Goodbye :)')
     
 

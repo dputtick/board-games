@@ -1,12 +1,7 @@
-# Say we have a list representing a board:
-
+#boards for testing
 empty_board = [None, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 partial_board = [None, 1, 2, 'X', 4, 'O', 6, 7, 8, 9]
 
-# We want to take this list and convert it:
-# into a list of probabilities of a move being good?
-# into a specific decision?
 
 
 def board_converter(board_input):
