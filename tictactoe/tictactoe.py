@@ -19,6 +19,7 @@ def board_displayer(board):
     print(empty_row)
     print('')
 
+
 def move_getter(player, board, piece):
     '''Returns a new move from either player, 
     or the computer if a 1 player game'''
@@ -38,11 +39,13 @@ def move_getter(player, board, piece):
     elif player == 'Computer':
         return computer_move(board, piece)
 
+
 def update_board(board, move, piece):
     '''Updates the board with a new move and returns it'''
 
     board[move] = piece
     return board
+
 
 def victory_checker(board, piece):
     '''Checks whether the victory conditions are met for a given player'''
@@ -59,6 +62,7 @@ def victory_checker(board, piece):
     else:
         return False
 
+
 def play_again():
     '''Returns input from the player whether or not to start a new game'''
 
@@ -66,6 +70,7 @@ def play_again():
         return True
     else:
         return False
+
 
 def one_or_two_players():
     '''Returns input from the player whether to start in 1 or 2 player mode'''
@@ -75,7 +80,8 @@ def one_or_two_players():
     else:
         return 1
 
-def play(first_mover):
+
+def main(first_mover):
     '''Function that actually handles playing the game'''
 
     board = [None] + list(range(1, 10))
@@ -93,7 +99,7 @@ def play(first_mover):
             print('The game ends in a draw.\n')
             if play_again() == True:
                 player = invert_dict[player]
-                play(player)
+                main(player)
             else:
                 print('Thanks for playing!')
                 return None
@@ -102,10 +108,11 @@ def play(first_mover):
     print('Congratulations {}, you won!\n'.format(player.lower()))
     if play_again() == True:
         player = invert_dict[player]
-        play(player)
+        main(player)
     else:
         print('Thanks for playing!')
         return None
+
 
 def computer_move(board, piece):
     '''Returns a move for the computer in 1 player mode'''
@@ -184,7 +191,6 @@ def computer_move(board, piece):
     else:
         return None
 
-    
 
 if __name__ == '__main__':
     players = one_or_two_players()
@@ -194,6 +200,6 @@ if __name__ == '__main__':
     if players == 1:
         invert_dict = {'Player 1': 'Computer', 'Computer': 'Player 1'}
         player_dict = {'Player 1': 'X', 'Computer': 'O'}
-    play('Player 1')
+    main('Player 1')
     
 
