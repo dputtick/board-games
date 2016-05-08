@@ -2,8 +2,7 @@ import random
 
 
 def display_board(board):
-    '''Returns a visual representation of the current board'''
-
+    '''Returns a visual representation of the current board.'''
     empty_row = '   |   |   '
     token_row = ' {0} | {1} | {2} '
     full_row = '___|___|___'
@@ -22,8 +21,7 @@ def display_board(board):
 
 def get_move(player, board, piece):
     '''Returns a new move from either player, 
-    or the computer if a 1 player game'''
-
+    or the computer if a 1 player game.'''
     if player in ('Player 1', 'Player 2'):
         move = input("{}, it's your turn. Enter 1-9:\n".format(player))
         while True:
@@ -41,15 +39,13 @@ def get_move(player, board, piece):
 
 
 def update_board(board, move, piece):
-    '''Updates the board with a new move and returns it'''
-
+    '''Updates the board with a new move and returns it.'''
     board[move] = piece
     return board
 
 
 def check_victory(board, piece):
-    '''Checks whether the victory conditions are met for a given player'''
-
+    '''Checks whether the victory conditions are met for a given player.'''
     return ((board[1] == board[2] == board[3] == piece) or
     (board[4] == board[5] == board[6] == piece) or
     (board[7] == board[8] == board[9] == piece) or
@@ -61,20 +57,17 @@ def check_victory(board, piece):
 
 
 def play_again():
-    '''Returns input from the player whether or not to start a new game'''
-
+    '''Returns input from the player whether or not to start a new game.'''
     return input('Play again? y/n\n').lower() == 'y'
 
 
 def one_or_two_players():
-    '''Returns input from the player whether to start in 1 or 2 player mode'''
-
+    '''Returns input from the player whether to start in 1 or 2 player mode.'''
     return 2 if input('One or two players? 1/2\n') == '2' else 1
 
 
 def main(first_mover):
-    '''Function that actually handles playing the game'''
-
+    '''Function that actually handles playing the game.'''
     board = [None] + list(range(1, 10))
     player = first_mover
     while True:
@@ -108,8 +101,7 @@ def main(first_mover):
 
 
 def computer_move(board, piece):
-    '''Returns a move for the computer in 1 player mode'''
-
+    '''Returns a move for the computer in 1 player mode.'''
     invert_piece = {'X': 'O', 'O': 'X'}
     opp_piece = invert_piece[piece]
     transform_sides = {1:9, 9:1, 2:8, 8:2, 3:7, 7:3, 4:6, 6:4}
