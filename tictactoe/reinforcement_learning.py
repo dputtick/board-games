@@ -24,13 +24,16 @@ def base_probability_matrix_generator(converted_binary_board):
 
 
 def move_generator(board, piece, probability_table):
+    '''Looks up probability matrix and returns a move choice based on
+    the weightings from the matrix'''
     board = board_converter(board)
     probability_matrix = probability_lookup(board, probability_table)
-    move = random_choice(probability_matrix)
-    return move
+    return random_choice(probability_matrix)
 
 
 def random_choice(probability_matrix):
+    '''Takes given probability matrix and returns a weighted
+    random choice of board spaces [1 - 9]'''
     weights = np.reshape(probability_matrix, (1, -1))
     values = np.arange(1, 10)
     cumweights = []
@@ -44,12 +47,18 @@ def random_choice(probability_matrix):
 
 
 def probability_lookup(board, probability_table):
+    '''Takes a board and the global probability table, checks
+    whether the board is in the table, and returns the appropriate
+    probability matrix'''
     if board not in probability_table:
         probability_table[board] = base_probability_matrix_generator(board)
     return probability_table[board]
 
 
 def update_probabilities(move_history, probability_table, player=None):
+    '''Returns an updated probability table from a given probability
+    table and a move history for a game. If player == None, the game
+    was a draw.'''
     if player == 'None':
         update_function = 'Mild'
     elif player == 'RL':
@@ -59,15 +68,17 @@ def update_probabilities(move_history, probability_table, player=None):
     return update_table(probability_table, update_function)
 
 def update_table(probability_table, update_function):
+    '''Updates a probability table using the passed-in update function.'''
     pass
 
 
 def ai_or_network_move(player, board, piece):
+    '''Returns a move from the rule-based AI or the
+    reinforcement learning algorithm.'''
     if player == 'AI':
-        move = t.computer_move(board, piece)
+        return t.computer_move(board, piece)
     elif player == 'RL':
-        move = move_generator(board, piece)
-    return move
+        return move_generator(board, piece)
 
 
 def run_game(first_mover, probability_table, runs):
