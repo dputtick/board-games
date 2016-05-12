@@ -1,7 +1,6 @@
 import numpy as np
 import tictactoe as t
 from random import random
-from bisect import bisect
 
 
 def board_converter(board_input):
@@ -32,9 +31,16 @@ def move_generator(board, piece, probability_table):
 
 
 def random_choice(probability_matrix):
-    flattened_matrix = np.reshape(probability_matrix, (1, -1))
-    values, weights = zip(enumerate(flattened_matrix[0]))
-    return choice
+    weights = np.reshape(probability_matrix, (1, -1))
+    values = np.arange(1, 10)
+    cumweights = []
+    weight_sum = 0
+    for weight in weights[0]:
+        weight_sum += weight
+        cumweights.append(weight_sum)
+    random_point = random() * weight_sum
+    random_index = np.searchsorted(weights, random_point)
+    return values[random_index]
 
 
 def probability_lookup(board, probability_table):
