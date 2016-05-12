@@ -62,13 +62,18 @@ def play_again():
 
 
 def one_or_two_players():
-    '''Returns input from the player whether to start in 1 or 2 player mode.'''
+    '''Returns input from the player 
+    whether to start in 1 or 2 player mode.'''
     return 2 if input('One or two players? 1/2\n') == '2' else 1
 
 
+def empty_board():
+    '''Makes a new blank board as a list'''
+    return [None] + list(range(1, 10))
+
 def main(first_mover):
     '''Function that actually handles playing the game.'''
-    board = [None] + list(range(1, 10))
+    board = empty_board()
     player = first_mover
     while True:
         piece = player_dict[player]
