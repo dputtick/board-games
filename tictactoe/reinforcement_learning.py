@@ -1,6 +1,7 @@
 import numpy as np
 import tictactoe as t
 from random import random
+from bisect import bisect
 
 
 def board_converter(board_input):
@@ -23,15 +24,15 @@ def base_probability_matrix_generator(converted_binary_board):
     return probability_matrix
 
 
-def move_generator(board, piece, probability_table):
+def move_generator(board, piece, prob_table):
     '''Looks up probability matrix and returns a move choice based on
     the weightings from the matrix'''
     board = board_converter(board)
-    probability_matrix = probability_lookup(board, probability_table)
-    return random_choice(probability_matrix)
+    probability_matrix = probability_lookup(board, prob_table)
+    return weighted_random_choice(probability_matrix)
 
 
-def random_choice(probability_matrix):
+def weighted_random_choice(probability_matrix):
     '''Takes given probability matrix and returns a weighted
     random choice of board spaces [1 - 9]'''
     weights = np.reshape(probability_matrix, (1, -1))
@@ -42,20 +43,20 @@ def random_choice(probability_matrix):
         weight_sum += weight
         cumweights.append(weight_sum)
     random_point = random() * weight_sum
-    random_index = np.searchsorted(weights, random_point)
+    random_index = bisect(cumweights, random_point)
     return values[random_index]
 
 
-def probability_lookup(board, probability_table):
+def probability_lookup(board, prob_table):
     '''Takes a board and the global probability table, checks
     whether the board is in the table, and returns the appropriate
     probability matrix'''
-    if board not in probability_table:
-        probability_table[board] = base_probability_matrix_generator(board)
-    return probability_table[board]
+    if str(board) not in prob_table:
+        prob_table[str(board)] = base_probability_matrix_generator(board)
+    return prob_table[str(board)]
 
 
-def update_probabilities(move_history, probability_table, player=None):
+def update_probabilities(move_history, prob_table, player=None):
     '''Returns an updated probability table from a given probability
     table and a move history for a game. If player == None, the game
     was a draw.'''
@@ -65,27 +66,27 @@ def update_probabilities(move_history, probability_table, player=None):
         update_function = 'Strong'
     elif player == 'AI':
         update_function = 'Negative'
-    return update_table(move_history, probability_table, update_function)
+    return update_table(move_history, prob_table, update_function)
 
-def update_table(move_history, probability_table, update_function):
+def update_table(move_history, prob_table, update_function):
     '''Updates a probability table using the passed-in update function.'''
     update_function_dict = {'Mild': 1.1, 'Strong': 1.25, 'Negative': .75}
     multiplication_factor = update_function_dict[update_function]
     for board in reversed(move_history):
-        probability_table[board] = probability_table[board]*multiplication_factor
-    return probability_table
+        prob_table[str(board)] = (prob_table[str(board)] * multiplication_factor)
+    return prob_table
 
 
-def ai_or_network_move(player, board, piece, probability_table):
+def ai_or_network_move(player, board, piece, prob_table):
     '''Returns a move from the rule-based AI or the
     reinforcement learning algorithm.'''
     if player == 'AI':
         return t.computer_move(board, piece)
     elif player == 'RL':
-        return move_generator(board, piece, probability_table)
+        return move_generator(board, piece, prob_table)
 
 
-def run_game(first_mover, probability_table, runs):
+def run_game(first_mover, prob_table, runs):
     board = t.empty_board()
     move_history = [board_converter(board)]
     player_dict = {'AI': 'X', 'RL': 'O'}
@@ -98,27 +99,27 @@ def run_game(first_mover, probability_table, runs):
             player = 'RL'
         while True:
             piece = player_dict[player]
-            move = ai_or_network_move(player, board, piece, probability_table)
+            move = ai_or_network_move(player, board, piece, prob_table)
             board = t.update_board(board, move, piece)
             if player == 'RL':
                 move_history.append(board_converter(board))
             if t.check_victory(board, piece):
-                probability_table = update_probabilities(move_history, 
-                                                probability_table, player)
+                prob_table = update_probabilities(move_history, 
+                                                prob_table, player)
                 win_counter[player] = win_counter[player] + 1
                 break
             elif 0 not in board_converter(board):
-                probability_table = update_probabilities(move_history, 
-                                                        probability_table)
+                prob_table = update_probabilities(move_history, 
+                                                        prob_table)
                 break
             else:
                 player = invert_dict[player]
-    return probability_table
+    return prob_table
 
 
 def main():
-    probability_table = {}
-    probability_table, win_counter = run_game('AI', probability_table, 10000)
+    prob_table = {}
+    prob_table, win_counter = run_game('AI', prob_table, 10000)
     print(win_counter)
     #boards for tests
     empty_board = [None, 1, 2, 3, 4, 5, 6, 7, 8, 9]
