@@ -16,6 +16,11 @@ class RlTests(unittest.TestCase):
         choice = rl.weighted_random_choice(self.probability_matrix)
         self.assertTrue(choice)
 
+    def test_probability_matrix_generator(self):
+        self.matrix = rl.base_probability_matrix_generator(
+            self.empty_binary_board)
+        print(self.matrix)
+
 
 if __name__ == '__main__':
     unittest.main()
