@@ -2,6 +2,7 @@ import numpy as np
 import tictactoe as t
 from random import random
 from bisect import bisect_left
+import cProfile
 
 
 def board_converter(board_input):
@@ -49,9 +50,9 @@ def probability_lookup(board, prob_table):
     '''Takes a board and the global probability table, checks
     whether the board is in the table, and returns the appropriate
     probability matrix'''
-    if str(board) not in prob_table:
-        prob_table[str(board)] = base_probability_matrix_generator(board)
-    return prob_table[str(board)]
+    if board.tobytes() not in prob_table:
+        prob_table[board.tobytes()] = base_probability_matrix_generator(board)
+    return prob_table[board.tobytes()]
 
 
 def base_probability_matrix_generator(converted_binary_board):
@@ -65,31 +66,36 @@ def base_probability_matrix_generator(converted_binary_board):
     return probability_matrix
 
 
-def update_probabilities(move_history, prob_table, player=None):
+def update_probabilities(move_history, prob_table, winner=None):
     '''Returns an updated probability table from a given probability
     table and a move history for a game. If player == None, the game
     was a draw.'''
-    if player == None:
-        update_function = 'Mild'
-    elif player == 'RL':
-        update_function = 'Strong'
-    elif player == 'AI':
-        update_function = 'Negative'
+    if winner == None:
+        update_function = 'Draw'
+    elif winner == 'RL':
+        update_function = 'Win'
+    elif winner == 'AI':
+        update_function = 'Loss'
     return update_table(move_history, prob_table, update_function)
 
 
 def update_table(move_history, prob_table, update_function):
     '''Updates a probability table using the passed-in update function.'''
-    update_function_dict = {'Mild': 1.1, 'Strong': 5.0, 'Negative': .75}
-    multiplication_factor = update_function_dict[update_function]
+    update_function_dict = {'Draw': 4.0, 'Win': 1.5, 'Loss': -4.0}
+    factor = update_function_dict[update_function]
     for board, move in reversed(move_history):
         move_index = move - 1
-        old_prob_matrix = prob_table[str(board)]
+        old_prob_matrix = prob_table[board.tobytes()]
         flattened_prob_matrix = np.reshape(old_prob_matrix, (1, -1))
-        old_move_probability = flattened_prob_matrix[0][move_index]
-        new_move_prob = old_move_probability * multiplication_factor
+        old_move_prob = flattened_prob_matrix[0][move_index]
+        prob_change = (1 - old_move_prob) / factor
+        new_move_prob = old_move_prob + prob_change
         flattened_prob_matrix[0][move_index] = new_move_prob
-        prob_table[str(board)] = np.reshape(flattened_prob_matrix, (3, 3))
+        other_space_change = prob_change / np.count_nonzero(flattened_prob_matrix)
+        for index, space in enumerate(flattened_prob_matrix[0]):
+            if index != move_index:
+                flattened_prob_matrix[0][index] = space - other_space_change
+        prob_table[board.tobytes()] = np.reshape(flattened_prob_matrix, (3, 3))
     return prob_table
 
 
@@ -144,4 +150,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    cProfile.run('main()', sort='tottime')
