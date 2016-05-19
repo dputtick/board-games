@@ -4,7 +4,7 @@ import tictactoe as t
 import numpy as np
 
 
-class RlTests(unittest.TestCase):
+class tlTests(unittest.TestCase):
 
     def setUp(self):
         self.empty_binary_board = np.zeros((3,3))
@@ -24,3 +24,11 @@ class RlTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+
+    # empty_board = [None, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    # partial_board = [None, 1, 2, 'X', 4, 'O', 6, 7, 8, 9]
+    # board_output_prototype = np.array([[0, 0, 1],
+    #                               [0, -1, 0],
+    #                               [0, 0, 0]])

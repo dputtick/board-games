@@ -87,7 +87,6 @@ def update_table(move_history, prob_table, update_function):
         old_prob_matrix = prob_table[str(board)]
         flattened_prob_matrix = np.reshape(old_prob_matrix, (1, -1))
         old_move_probability = flattened_prob_matrix[0][move_index]
-        #if old_move_probability < 1e+40:
         new_move_prob = old_move_probability * multiplication_factor
         flattened_prob_matrix[0][move_index] = new_move_prob
         prob_table[str(board)] = np.reshape(flattened_prob_matrix, (3, 3))
@@ -142,13 +141,6 @@ def main():
     for item in run_results:
         print(item)
     return prob_table
-    # boards for tests
-    # empty_board = [None, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    # partial_board = [None, 1, 2, 'X', 4, 'O', 6, 7, 8, 9]
-    # board_output_prototype = np.array([[0, 0, 1],
-    #                               [0, -1, 0],
-    #                               [0, 0, 0]])
-
 
 
 if __name__ == '__main__':
