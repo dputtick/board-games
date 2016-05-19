@@ -2,6 +2,7 @@ import numpy as np
 import tictactoe as t
 from random import random
 from bisect import bisect_left
+import cProfile
 
 
 def board_converter(board_input):
@@ -49,9 +50,9 @@ def probability_lookup(board, prob_table):
     '''Takes a board and the global probability table, checks
     whether the board is in the table, and returns the appropriate
     probability matrix'''
-    if str(board) not in prob_table:
-        prob_table[str(board)] = base_probability_matrix_generator(board)
-    return prob_table[str(board)]
+    if board.tobytes() not in prob_table:
+        prob_table[board.tobytes()] = base_probability_matrix_generator(board)
+    return prob_table[board.tobytes()]
 
 
 def base_probability_matrix_generator(converted_binary_board):
@@ -84,7 +85,7 @@ def update_table(move_history, prob_table, update_function):
     factor = update_function_dict[update_function]
     for board, move in reversed(move_history):
         move_index = move - 1
-        old_prob_matrix = prob_table[str(board)]
+        old_prob_matrix = prob_table[board.tobytes()]
         flattened_prob_matrix = np.reshape(old_prob_matrix, (1, -1))
         old_move_prob = flattened_prob_matrix[0][move_index]
         prob_change = (1 - old_move_prob) / factor
@@ -94,7 +95,7 @@ def update_table(move_history, prob_table, update_function):
         for index, space in enumerate(flattened_prob_matrix[0]):
             if index != move_index:
                 flattened_prob_matrix[0][index] = space - other_space_change
-        prob_table[str(board)] = np.reshape(flattened_prob_matrix, (3, 3))
+        prob_table[board.tobytes()] = np.reshape(flattened_prob_matrix, (3, 3))
     return prob_table
 
 
@@ -149,4 +150,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    cProfile.run('main()', sort='tottime')
