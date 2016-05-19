@@ -137,7 +137,7 @@ def run_game(prob_table, runs):
 
 def main():
     prob_table = {}
-    prob_table, win_counter, run_results = run_game(prob_table, 10001)
+    prob_table, win_counter, run_results = run_game(prob_table, 1001)
     for item in run_results:
         print(item)
     return prob_table
