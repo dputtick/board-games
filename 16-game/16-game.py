@@ -1,5 +1,6 @@
 import random
 import time
+import curses
 
 
 def board_printer(board_matrix):
@@ -9,6 +10,7 @@ def board_printer(board_matrix):
         row = [str(num).rjust(2) for num in row]
         print(*row)
     print()
+
 
 
 def move_getter(board_matrix):
@@ -118,7 +120,7 @@ def setup():
     return shuffled_board_list, board_matrix, solution_board_matrix
 
 
-def main():
+def main(stdscr):
     board_list, board_matrix, solution_board_matrix = setup()
     start_time = time.time()
     while True:
@@ -133,4 +135,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    curses.wrapper(main)
