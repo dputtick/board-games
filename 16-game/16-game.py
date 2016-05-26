@@ -2,6 +2,12 @@ import random
 import time
 import curses
 
+# Write a function that mimics the Python print function using curses
+# Insert the appropriate .refreshes and .clears for desired functionality
+# Adjust move_getter to abstract out the appropriate key functionality
+# Write a function that takes the possible arrow keys, waits for them, and returns the chosen one
+
+
 
 def board_printer(board_matrix):
     '''Prints a visual representation of the board.'''
