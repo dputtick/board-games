@@ -34,9 +34,9 @@ def move_getter(board_matrix):
             print("That's not a legal move. Try again!")
             continue
         legal_moves = [(empty_spot_row - 1, empty_spot_index),
-                        (empty_spot_row + 1, empty_spot_index),
-                        (empty_spot_row, empty_spot_index - 1),
-                        (empty_spot_row, empty_spot_index + 1)]
+                    (empty_spot_row + 1, empty_spot_index),
+                    (empty_spot_row, empty_spot_index - 1),
+                    (empty_spot_row, empty_spot_index + 1)]
         if (move_row, move_index) not in legal_moves:
             print("You can't move that piece. Try again!")
             continue
