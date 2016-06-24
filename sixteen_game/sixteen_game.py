@@ -11,6 +11,11 @@ Write a function that takes the possible arrow keys, waits for them,
 and returns the chosen one'''
 
 
+def clear_screen(func):
+    stdscr.clear()
+    return func
+
+
 @clear_screen
 def board_printer(board_matrix):
     '''Prints a visual representation of the board.'''
@@ -36,9 +41,9 @@ def move_getter(board_matrix):
             print("That's not a legal move. Try again!")
             continue
         legal_moves = [(empty_spot_row - 1, empty_spot_index),
-                    (empty_spot_row + 1, empty_spot_index),
-                    (empty_spot_row, empty_spot_index - 1),
-                    (empty_spot_row, empty_spot_index + 1)]
+                        (empty_spot_row + 1, empty_spot_index),
+                        (empty_spot_row, empty_spot_index - 1),
+                        (empty_spot_row, empty_spot_index + 1)]
         if (move_row, move_index) not in legal_moves:
             print("You can't move that piece. Try again!")
             continue
@@ -46,27 +51,23 @@ def move_getter(board_matrix):
         board_matrix[move_row][move_index] = ' '
         return board_matrix
 
+
 @clear_screen
 def choose_board_size():
     stdscr.echo()
     '''Returns the player's choice of square board's side length.'''
     while True:
-        board_size = input("How long do you want the sides of the board to be?\n")
+        board_size = input("How long do you want the board's sides to be?\n")
         try:
             return int(board_size)
         except ValueError:
             print("Oops. Please enter an integer (3-9).")
 
 
-def clear_screen(func):
-    stdscr.clear()
-    return func
-
-
 def setup():
     '''Called by main(), performs initial setup of the game state'''
     board_size = choose_board_size()
-    solution_board_list = list(range(1, (board_size ** 2 ))) + [' ']
+    solution_board_list = list(range(1, (board_size ** 2))) + [' ']
     solution_board_matrix = list_to_matrix(solution_board_list, board_size)
     shuffled_board_list = list(solution_board_list)
     random.shuffle(shuffled_board_list)
@@ -89,7 +90,7 @@ def location_finder(board_matrix, item):
 def list_to_matrix(board_list, board_size):
     '''Converts a board represented as a list
     to a board represented by a matrix with a side length of board_size.'''
-    return [board_list[i:i + board_size] 
+    return [board_list[i:i + board_size]
             for i in range(0, len(board_list), board_size)]
 
 
