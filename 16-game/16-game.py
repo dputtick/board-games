@@ -2,10 +2,13 @@ import random
 import time
 import curses
 
-# Write a function that mimics the Python print function using curses
-# Insert the appropriate .refreshes and .clears for desired functionality
-# Adjust move_getter to abstract out the appropriate key functionality
-# Write a function that takes the possible arrow keys, waits for them, and returns the chosen one
+'''Write a function that mimics the Python print function using curses since all
+of my interaction with the user is via print and input statements.
+This means I need some sort a screen displayer function, and then a 
+Insert the appropriate .refreshes and .clears for desired functionality
+Adjust move_getter to abstract out the appropriate key functionality
+Write a function that takes the possible arrow keys, waits for them, 
+and returns the chosen one'''
 
 
 
@@ -16,7 +19,6 @@ def board_printer(board_matrix):
         row = [str(num).rjust(2) for num in row]
         print(*row)
     print()
-
 
 
 def move_getter(board_matrix):
