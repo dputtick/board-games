@@ -11,14 +11,9 @@ Write a function that takes the possible arrow keys, waits for them,
 and returns the chosen one'''
 
 
-def clear_screen(func):
-    stdscr.clear()
-    return func
-
-
-@clear_screen
-def board_printer(board_matrix):
+def board_printer(stdscr, board_matrix):
     '''Prints a visual representation of the board.'''
+    stdscr.clear()
     y_coord = 0
     for row in board_matrix:
         row = [str(num).rjust(2) for num in row]
@@ -52,8 +47,8 @@ def move_getter(board_matrix):
         return board_matrix
 
 
-@clear_screen
-def choose_board_size():
+def choose_board_size(stdscr):
+    stdscr.clear
     stdscr.echo()
     '''Returns the player's choice of square board's side length.'''
     while True:
@@ -64,9 +59,9 @@ def choose_board_size():
             print("Oops. Please enter an integer (3-9).")
 
 
-def setup():
+def setup(stdscr):
     '''Called by main(), performs initial setup of the game state'''
-    board_size = choose_board_size()
+    board_size = choose_board_size(stdscr)
     solution_board_list = list(range(1, (board_size ** 2))) + [' ']
     solution_board_matrix = list_to_matrix(solution_board_list, board_size)
     shuffled_board_list = list(solution_board_list)
@@ -136,10 +131,10 @@ def is_valid_board(board_list, board_size):
 
 
 def main(stdscr):
-    board_list, board_matrix, solution_board_matrix = setup()
+    board_list, board_matrix, solution_board_matrix = setup(stdscr)
     start_time = time.time()
     while True:
-        board_printer(board_matrix)
+        board_printer(stdscr, board_matrix)
         board_matrix = move_getter(board_matrix)
         if game_finished_checker(board_matrix, solution_board_matrix):
             total_time = round(time.time() - start_time)
