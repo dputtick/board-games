@@ -16,9 +16,20 @@ def board_printer(stdscr, board_matrix):
     stdscr.clear()
     y_coord = 0
     for row in board_matrix:
-        row = [str(num).rjust(2) for num in row]
-        stdscr.addstr(y_coord, 0, row)
+        row_str = ''.join([str(num).rjust(2) for num in row])
+        stdscr.addstr(y_coord, 0, row_str)
         y_coord += 1
+
+
+def get_input(stdscr, prompt):
+    stdscr.clear()
+    stdscr.addstr(prompt)
+    return stdscr.getkey()
+
+
+def print_text(stdscr, string):
+    stdscr.clear()
+    stdscr.addstr(string)
 
 
 def move_getter(board_matrix):
@@ -48,19 +59,21 @@ def move_getter(board_matrix):
 
 
 def choose_board_size(stdscr):
+    '''Returns the player's choice of square board's side length.'''
     stdscr.clear
     stdscr.echo()
-    '''Returns the player's choice of square board's side length.'''
     while True:
-        board_size = input("How long do you want the board's sides to be?\n")
+        size_prompt = "How long do you want the board's sides to be?"
+        board_size = get_input(stdscr, size_prompt)
         try:
             return int(board_size)
         except ValueError:
-            print("Oops. Please enter an integer (3-9).")
+            print_text(stdscr, "Oops. Please enter an integer (3-9).")
 
 
 def setup(stdscr):
     '''Called by main(), performs initial setup of the game state'''
+    curses.use_default_colors()
     board_size = choose_board_size(stdscr)
     solution_board_list = list(range(1, (board_size ** 2))) + [' ']
     solution_board_matrix = list_to_matrix(solution_board_list, board_size)

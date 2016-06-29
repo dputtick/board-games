@@ -1,0 +1,7 @@
+games.org
+
+*.pyc
+
+__pycache__
+
+.cache
