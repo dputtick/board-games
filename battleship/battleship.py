@@ -14,8 +14,7 @@ class Game():
         def __init__(self):
             row = ['*' for _ in range(10)]
             self.matrix = [list(row) for _ in range(10)]
-            # is there a better solution here than list(row)?
-            self.matrix[0][0] = 1
+            # is there a better solution here than list(row) to prevent dup list problem?
             print(self.matrix)
             # is this the best way to make a matrix efficiently?
             # should I use an @property here for the board?
@@ -32,3 +31,5 @@ if __name__ == '__main__':
 
 # if I try to run this at module level, I get "can't find '__main__' module in 'battleship/'"
 # how do I make this work?
+
+# how do I merge in only my changes to battleship and leave curses stuff as is? Can I merge only specific sections?
