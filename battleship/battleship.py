@@ -9,20 +9,45 @@ class Game():
         # should I use async here? or threading? that could be cool
         pass
 
+# game object is a dispatcher
+    # gives and takes information from players and board
 
-    class Board():
-        def __init__(self):
-            row = ['*' for _ in range(10)]
-            self.matrix = [list(row) for _ in range(10)]
-            # is there a better solution here than list(row) to prevent dup list problem?
-            print(self.matrix)
-            # is this the best way to make a matrix efficiently?
-            # should I use an @property here for the board?
+# player object
+    # get user input
+    # UI / client
+    # input validation
+    # sends input to game object
 
+# board
+    # stores the state of the game
+    # gives information to the game object about events
+
+
+# list of game events
+    # let the player choose where their ships are
+    # taking turns - logic for alternating
+    # guessing a specific location
+    # checking for hits
+    # checking for sunken ships
+    # checking for win conditions
+
+
+
+class Board():
+    def __init__(self, size):
+        row = [0 for _ in range(size)]
+        self._matrix = [list(row) for _ in range(size)]
+
+
+    def render(self):
+        for row in self.matrix:
+            print(row)
 
 
 def main():
-    board = Game.Board()
+    board_size = 4
+    board = Board(board_size)
+    board.render()
 
 
 if __name__ == '__main__':
