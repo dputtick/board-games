@@ -35,7 +35,7 @@ class Player():
                 print("Invalid move. Try again.")
 
     def valid_ship_placement(self, ship_data):
-        # TODO add ship
+        # TODO add ship placement validation
         return True
 
     def get_move(self):
