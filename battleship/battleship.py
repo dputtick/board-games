@@ -7,12 +7,12 @@ class Game():
             players.append(Player(playerid))
 
     def run(self):
-        self._setup_phase
+        self.setup_phase
 
-    def _setup_phase(self):
+    def setup_phase(self):
         pass
 
-    def _game_loop(self):
+    def game_loop(self):
         pass
 
 
@@ -48,8 +48,6 @@ class Board():
                 y -= 1
             else:
                 x -= 1
-
-        
 
 
 def main():
