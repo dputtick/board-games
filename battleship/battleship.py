@@ -40,8 +40,11 @@ class Player():
     def get_locations(self, ship_lengths):
         print("Remaining ships: ", *ship_lengths)
         y, x = input("Player {} location:\n".format(self.id_name))
-
-
+        direction = input("Direction:\n")
+        length = input("Length:\n")
+        return {'location': (y, x),
+                'direction': direction,
+                'length'}
                 
 
 class Board():
