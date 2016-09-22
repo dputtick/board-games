@@ -1,59 +1,61 @@
 class Game():
     def __init__(self):
-        # create board (maybe prompt for size)
-        self.players = []
-        self.boards = {}
-        for playerid in [1]:
-            self.players.append(Player(playerid))
-            self.boards[playerid] = Board(4, playerid)
+        self.players = [Player(player_id) for player_id in [1]]
 
     def run(self):
         self.setup_phase()
-        self.board.render()
+        self.game_loop()
 
     def setup_phase(self):
         for player in self.players:
-            board = boards[player.playerid]
-            ship_lengths = [2]
-            ship_id = 1
-            while ship_lengths:
-                ship_data = player.get_locations(ship_lengths)
-                if self.valid_ship(ship_data):
-                    self.board.place_ship(ship_id, ship_data)
-                    ship_lengths.remove(ship_data['length'])
-                else:
-                    print("Invalid move. Try again.")
-
-    def valid_ship(self, ship_data):
-        return True
+            player.initial_placements()
 
     def game_loop(self):
+        while True:
+            break
         pass
 
 
 class Player():
-    def __init__(self, playerid):
+    def __init__(self, player_id):
         self.human = True
-        self.playerid = playerid
+        self.player_id = player_id
+        self.board = Board(player_id)
+
+    def initial_placements(self):
+        ship_lengths = [2]
+        ship_id = 1
+        while ship_lengths:
+            ship_data = self.get_locations(ship_lengths)
+            if self.valid_ship_placement(ship_data):
+                self.board.place_ship(ship_id, ship_data)
+                ship_lengths.remove(ship_data['length'])
+                ship_id += 1
+            else:
+                print("Invalid move. Try again.")
+
+    def valid_ship_placement(self, ship_data):
+        # TODO add ship
+        return True
 
     def get_move(self):
-        move = input("Player {}, enter your next move".format(self.playerid))
+        move = input("Player {}, enter your next move".format(self.player_id))
         return move
 
     def get_locations(self, ship_lengths):
         print("Remaining ships: ", *ship_lengths)
-        loc_strings = input("Player {} location:\n".format(self.playerid))
-        x, y = (int(n) for n in loc_strings.split()) # TODO sanitize input here
+        loc_strings = input("Player {} location:\n".format(self.player_id))
+        x, y = (int(n) for n in loc_strings.split())  # TODO sanitize input here
         direction = input("Direction:\n")
         length = int(input("Length:\n"))
         return {'location': (y, x),
                 'direction': direction,
                 'length': length}
-                
+
 
 class Board():
-    def __init__(self, size, player):
-        self.player = player
+    def __init__(self, size, player_id):
+        self.player_id = player_id
         row = [0 for _ in range(size)]
         self.matrix = [list(row) for _ in range(size)]
         self.ships = {}
@@ -61,7 +63,6 @@ class Board():
     def render(self):
         for row in self.matrix:
             print(row)
-
 
     def place_ship(self, ship_id, ship_data):
         '''Ship data format: {'location': (<y>, <x>), 'direction': <'v' or 'h'>,
