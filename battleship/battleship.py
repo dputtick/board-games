@@ -1,7 +1,7 @@
 class Game():
     def __init__(self):
-        # objects we need: board object, player objects
-        # methods we need: moves, checking for 
+        # create board (maybe prompt for size)
+        # create players
         pass
 
     def run(self):
@@ -15,11 +15,13 @@ class Game():
 
 
 class Player():
-    def __init__(self):
+    def __init__(self, id_name):
         self.human = True
+        self.id_name = id_name
 
     def get_move(self):
-        pass
+        move = input("Player {}, enter your next move".format(self.id_name))
+        return move
 
 
 class Board():
