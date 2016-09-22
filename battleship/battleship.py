@@ -7,9 +7,17 @@ class Game():
             players.append(Player(playerid))
 
     def run(self):
-        self.setup_phase
+        self.setup_phase()
 
     def setup_phase(self):
+        for player in self.players:
+            ship_lengths = [2, 2]
+            while ship_lengths:
+                ship = player.get_locations(ship_lengths)
+                if valid_ship(ship):
+                    self.board.place_ship(ship_id, data)
+    
+    def valid_ship(self, ship):
         pass
 
     def game_loop(self):
@@ -25,6 +33,12 @@ class Player():
         move = input("Player {}, enter your next move".format(self.id_name))
         return move
 
+    def get_locations(self):
+        ship_lengths = [2, 2]
+            while ship_lengths:
+                print("Remaining ships: ", *ship_lengths)
+                y, x = input("Player {} move:\n".format(self.id_name))
+                
 
 class Board():
     def __init__(self, size):
