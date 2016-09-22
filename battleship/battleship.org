@@ -1,0 +1,24 @@
+- game object is a dispatcher
+  - gives and takes information from players and board (should the UI be here or on board?)
+
+- player object
+  - get user input
+  - UI / client
+  - input validation
+  - sends input to game object
+
+- board object
+  - stores the state of the game (ship locations, ship damage)
+  - gives info to the game object
+  - responds to queries from the game object (going with a response style API)
+    - a ship is sunk
+    - hit or miss
+
+- list of game events
+  - setup phase
+  - let the player choose where their ships are
+  - taking turns
+  - guessing a specific location
+  - checking for hits
+  - checking for sunken ships
+  - checking for win conditions

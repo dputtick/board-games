@@ -15,30 +15,6 @@ class Player():
         self.human = True
 
 
-# game object is a dispatcher
-    # gives and takes information from players and board
-
-# player object
-    # get user input
-    # UI / client
-    # input validation
-    # sends input to game object
-
-# board
-    # stores the state of the game
-    # gives information to the game object about events
-    # responds to queries from the game object
-
-
-# list of game events
-    # let the player choose where their ships are
-    # taking turns - logic for alternating
-    # guessing a specific location
-    # checking for hits
-    # checking for sunken ships
-    # checking for win conditions
-
-
 class Board():
     def __init__(self, size):
         row = [0 for _ in range(size)]
