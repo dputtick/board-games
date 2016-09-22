@@ -1,5 +1,5 @@
 - game object is a dispatcher
-  - gives and takes information from players and board (should the UI be here or on board?)
+  - gives and takes information from players and board (should the UI/board representation be here or on board?)
 
 - player object
   - get user input
@@ -16,9 +16,17 @@
 
 - list of game events
   - setup phase
-  - let the player choose where their ships are
-  - taking turns
-  - guessing a specific location
-  - checking for hits
-  - checking for sunken ships
-  - checking for win conditions
+    - let the players choose where their ships are
+  - play phase
+    - alternation of turns
+    - guessing a location
+    - checking for hits
+    - checking for sunken ships
+    - checking for win conditions
+
+
+- questions
+ - if I try to run this at module level, I get "can't find '__main__' module in 'battleship/'", how do I make this work?
+ - how do I merge in only my changes to battleship and leave curses stuff as is? Can I merge only specific sections?
+ - what are the pros and cons of a central board object?
+ - where should I keep my UI/board representation?

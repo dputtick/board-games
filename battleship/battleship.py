@@ -4,15 +4,22 @@ class Game():
         # methods we need: moves, checking for 
         pass
 
+    def run(self):
+        pass
+
+    def setup_phase(self):
+        pass
 
     def game_loop(self):
-        # should I use async here? or threading? that could be cool
         pass
 
 
 class Player():
     def __init__(self):
         self.human = True
+
+    def get_move(self):
+        pass
 
 
 class Board():
@@ -41,9 +48,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-# if I try to run this at module level, I get "can't find '__main__' module in 'battleship/'"
-# how do I make this work?
-
-# how do I merge in only my changes to battleship and leave curses stuff as is? Can I merge only specific sections?
