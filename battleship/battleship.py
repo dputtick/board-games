@@ -12,13 +12,17 @@ class Game():
     def setup_phase(self):
         for player in self.players:
             ship_lengths = [2, 2]
+            ship_id = 1
             while ship_lengths:
-                ship = player.get_locations(ship_lengths)
-                if valid_ship(ship):
-                    self.board.place_ship(ship_id, data)
-    
-    def valid_ship(self, ship):
-        pass
+                ship_data = player.get_locations(ship_lengths)
+                if valid_ship(ship_data):
+                    self.board.place_ship(ship_id, ship_data)
+                    ship_lengths.remove(ship_data['length'])
+                else:
+                    print("Invalid move. Try again.")
+
+    def valid_ship(self, ship_data):
+        return True
 
     def game_loop(self):
         pass
@@ -33,11 +37,11 @@ class Player():
         move = input("Player {}, enter your next move".format(self.id_name))
         return move
 
-    def get_locations(self):
-        ship_lengths = [2, 2]
-            while ship_lengths:
-                print("Remaining ships: ", *ship_lengths)
-                y, x = input("Player {} move:\n".format(self.id_name))
+    def get_locations(self, ship_lengths):
+        print("Remaining ships: ", *ship_lengths)
+        y, x = input("Player {} location:\n".format(self.id_name))
+
+
                 
 
 class Board():
@@ -51,14 +55,14 @@ class Board():
             print(row)
 
 
-    def place_ship(self, ship_id, data):
+    def place_ship(self, ship_id, ship_data):
         '''Ship data format: {'location': (<y>, <x>), 'direction': <'v' or 'h'>,
         'length': <int>'''
-        self.ships[ship_id] = data
-        y, x = data['location']
-        for _ in range(data['length']):
+        self.ships[ship_id] = ship_data
+        y, x = ship_data['location']
+        for _ in range(ship_data['length']):
             self.matrix[y][x] = ship_id
-            if data['direction'] == 'v':
+            if ship_data['direction'] == 'v':
                 y -= 1
             else:
                 x -= 1
