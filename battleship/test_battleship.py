@@ -13,7 +13,7 @@ class TestBoard:
 
     def test_board_init_empty(self, board):
         for row in board._matrix:
-            assert row == []
+            assert row == [0] * 4
 
     def test_matrix_updates_on_place_ship(self, board):
         add_ship_origin_vertical(board)
@@ -25,8 +25,6 @@ class TestBoard:
         assert test_ship['location'] == (0,0)
         assert test_ship['length'] == 2
         assert test_ship['direction'] == 'v'
-
-class TestGame:
 
 
 
