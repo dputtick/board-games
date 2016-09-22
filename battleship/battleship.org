@@ -1,16 +1,18 @@
-- game object is a dispatcher
-  - gives and takes information from players and board (should the UI/board representation be here or on board?)
+* game object
+  - is a dispatcher
+  - gives and takes information from players and board
 
-- player object
-  - show user guesses so far
-  - get user input
-  - input validation
-  - sends input to game object
-  - tells the user if things happen
+* player object
+  - holds the UI
+    - show user status of the game [calls render() method on board at right times]
+    - get user input for new actions [placing ships, making guesses]
+    - input validation
+    - modifies board object
+    - asks the board object to check for conditions? or does the board do it automatically after each move
 
-- board object
-  - stores the state of the game (ship locations, ship damage)
-  - gives info to the game object
+* board object
+  - stores the state of the game for each player (ship locations, ship damage)
+  - gives info to the player/game objects
   - responds to queries from the game object (going with a response style API)
     - a ship is sunk
     - hit or miss
@@ -25,15 +27,12 @@
     - number can be a ship id
     - X can mean a guess
 
-- list of game events
+* list of possble game events
   - setup phase
-    - let the players choose where their ships are
+    - each player chooses where their ships are
   - play phase
-    - alternation of turns
-    - guessing a location
-    - checking for hits
-    - checking for sunken ships
-    - checking for win conditions
+    - players alternate guessing a location
+    - after each guess, must check for hits, sunken ships, and win conditions
 
 
 - questions

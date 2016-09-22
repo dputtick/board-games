@@ -4,10 +4,10 @@ import battleship as b
 
 @pytest.fixture
 def board():
-    return b.Board(4, 1)
+    return b.Board(player_id=1)
 
 
-class TestBoard:
+class TestBoardObject:
     def test_board_init_size(self, board):
         assert len(board.matrix) == 4
 
@@ -19,21 +19,34 @@ class TestBoard:
         add_ship_origin_vertical(board)
         assert board.matrix[0][0] == 1
 
-    def test_ships_update_on_place_ship(self, board):
+    def test_ships_dict_updates_on_place_ship(self, board):
         add_ship_origin_vertical(board)
         test_ship = board.ships[1]
-        assert test_ship['location'] == (0,0)
+        assert test_ship['location'] == (0, 0)
         assert test_ship['length'] == 2
         assert test_ship['direction'] == 'v'
 
-def test_board_creation(board):
-    assert len(board.matrix) == 4
+
+class TestGamePlay:
+    def test_setup(self):
+        pass
+
+    def test_user_guess_hit(self):
+        assert # guess should modify board, result in a hit
+
+    def test_user_guess_miss(self):
+        assert # guess should modify board, result in a miss
+
+class TestUI:
+    def test_user_sees_rendered_board(self):
+        pass
 
 
-
+# Helper Functions ######
 
 def add_ship_origin_vertical(board):
-    board.place_ship(1, {'location': (0,0), 'length': 2, 'direction': 'v'})
+    board.place_ship(1, {'location': (0, 0), 'length': 2, 'direction': 'v'})
 
-def make_board(size=4):
-    return b.Board(size)
+
+def make_board():
+    return b.Board(player_id=1)

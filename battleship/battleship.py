@@ -9,6 +9,7 @@ class Game():
     def setup_phase(self):
         for player in self.players:
             player.initial_placements()
+            player.board.render()
 
     def game_loop(self):
         while True:
@@ -35,7 +36,9 @@ class Player():
                 print("Invalid move. Try again.")
 
     def valid_ship_placement(self, ship_data):
-        # TODO add ship placement validation
+        # length must be in the list of ships not placed
+        # ship must not overlap with another ship
+        # ship must fit entirely inside of board
         return True
 
     def get_move(self):
@@ -54,7 +57,7 @@ class Player():
 
 
 class Board():
-    def __init__(self, size, player_id):
+    def __init__(self, size=4, player_id=None):
         self.player_id = player_id
         row = [0 for _ in range(size)]
         self.matrix = [list(row) for _ in range(size)]
