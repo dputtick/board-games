@@ -1,6 +1,6 @@
 class Game():
     def __init__(self):
-        # objects we need: board object
+        # objects we need: board object, player objects
         # methods we need: moves, checking for 
         pass
 
@@ -8,6 +8,12 @@ class Game():
     def game_loop(self):
         # should I use async here? or threading? that could be cool
         pass
+
+
+class Player():
+    def __init__(self):
+        self.human = True
+
 
 # game object is a dispatcher
     # gives and takes information from players and board
@@ -21,6 +27,7 @@ class Game():
 # board
     # stores the state of the game
     # gives information to the game object about events
+    # responds to queries from the game object
 
 
 # list of game events
@@ -32,16 +39,22 @@ class Game():
     # checking for win conditions
 
 
-
 class Board():
     def __init__(self, size):
         row = [0 for _ in range(size)]
         self._matrix = [list(row) for _ in range(size)]
+        self._ships = []
 
 
     def render(self):
-        for row in self.matrix:
+        for row in self._matrix:
             print(row)
+
+
+    def place_ship(self, location, length, direction):
+        ship = {'location': location, 'length': length, 'direction': direction}
+        self._ships.append(ship)
+        self._matrix[location[0]][location[1]] = 'x'
 
 
 def main():
