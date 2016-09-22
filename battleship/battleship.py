@@ -1,16 +1,18 @@
 class Game():
     def __init__(self):
         # create board (maybe prompt for size)
-        # create players
-        pass
+        self.board = Board(4)
+        players = []
+        for playerid in (1, 2):
+            players.append(Player(playerid))
 
     def run(self):
+        self._setup_phase
+
+    def _setup_phase(self):
         pass
 
-    def setup_phase(self):
-        pass
-
-    def game_loop(self):
+    def _game_loop(self):
         pass
 
 
@@ -27,25 +29,33 @@ class Player():
 class Board():
     def __init__(self, size):
         row = [0 for _ in range(size)]
-        self._matrix = [list(row) for _ in range(size)]
-        self._ships = []
-
+        self.matrix = [list(row) for _ in range(size)]
+        self.ships = {}
 
     def render(self):
         for row in self._matrix:
             print(row)
 
 
-    def place_ship(self, location, length, direction):
-        ship = {'location': location, 'length': length, 'direction': direction}
-        self._ships.append(ship)
-        self._matrix[location[0]][location[1]] = 'x'
+    def place_ship(self, ship_id, data):
+        '''Ship data format: {'location': (<y>, <x>), 'direction': <'v' or 'h'>,
+        'length': <int>'''
+        self.ships[ship_id] = data
+        y, x = data['location']
+        for _ in range(data['length']):
+            self.matrix[y][x] = ship_id
+            if data['direction'] == 'v':
+                y -= 1
+            else:
+                x -= 1
+
+        
 
 
 def main():
     board_size = 4
-    board = Board(board_size)
-    board.render()
+    game = Game(board_size)
+    game.run()
 
 
 if __name__ == '__main__':
