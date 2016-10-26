@@ -1,9 +1,5 @@
-games.org
-
+*.org
 *.pyc
-
 __pycache__
-
 .cache
-
 *_test.py
