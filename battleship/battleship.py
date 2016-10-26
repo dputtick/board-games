@@ -43,6 +43,7 @@ class Player():
 
     def get_move(self):
         move = input("Player {}, enter your next move".format(self.player_id))
+        # TODO confirm that move is a valid move
         return move
 
     def get_locations(self, ship_lengths):

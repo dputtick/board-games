@@ -1,11 +1,22 @@
 import pytest
-import battleship as b
+import battleship
 
 
 @pytest.fixture
 def board():
-    return b.Board(player_id=1)
+    return battleship.Board(player_id=1)
 
+@pytest.fixture
+def new_game():
+    return battleship.Game()
+
+@pytest.fixture
+def start_game():
+    game = battleship.Game()
+    # TODO: make arbitrary placements
+    return game
+
+# how do I make stubs to test input()
 
 class TestBoardObject:
     def test_board_init_size(self, board):
@@ -27,15 +38,21 @@ class TestBoardObject:
         assert test_ship['direction'] == 'v'
 
 
-class TestGamePlay:
+class TestSetup:
     def test_setup(self):
         pass
 
-    def test_user_guess_hit(self):
+
+
+class TestGamePlay:
+    def test_user_guess_hit(self, start_game):
         assert # guess should modify board, result in a hit
 
     def test_user_guess_miss(self):
         assert # guess should modify board, result in a miss
+
+    def test_run(self):
+
 
 class TestUI:
     def test_user_sees_rendered_board(self):
@@ -46,7 +63,3 @@ class TestUI:
 
 def add_ship_origin_vertical(board):
     board.place_ship(1, {'location': (0, 0), 'length': 2, 'direction': 'v'})
-
-
-def make_board():
-    return b.Board(player_id=1)
