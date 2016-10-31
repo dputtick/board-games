@@ -1,1 +1,6 @@
-These are a few attempts at writing common board games for two players to be played in the command line. I'll hopefully add AIs as I go, eventually using machine learning if I get around to it.
+These are a few common board games written to experiment with various programming concepts. Current list:
+
+- Tic tac toe: ncurses, neural networks/reinforcement learning
+- Connect4
+- 16-game: ncurses
+- Battleship: test driven development
